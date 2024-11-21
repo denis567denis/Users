@@ -12,8 +12,6 @@ import { BadRequestException } from '@test-project/exceptions';
 import { MessageError } from 'src/core/errors/errors-message';
 import { UserDomain } from '../domain';
 import { CryptoDomain } from '@test-project/crypto';
-import { InjectRedis } from '@nestjs-modules/ioredis';
-import { Redis } from 'ioredis';
 
 @Injectable()
 export class UserService {
@@ -21,16 +19,10 @@ export class UserService {
     private readonly userDomain: UserDomain,
     private readonly cryptoDomain: CryptoDomain,
     private readonly jwtService: JwtService,
-    @InjectRedis() private readonly redis: Redis,
   ) {}
 
   public async getUserByEmail({ email }: GetUserByEmailService) {
-    const userCache = await this.redis.get(`user:${email}`);
-    if (userCache) {
-      return JSON.parse(userCache);
-    }
     const user = await this.userDomain.getUserByEmail({ email });
-    await this.redis.set(`user:${email}`, JSON.stringify(user));
     if (!user) {
       throw new BadRequestException(MessageError.NoFindUser);
     }
@@ -45,7 +37,7 @@ export class UserService {
     }
 
     const accessToken = await this.jwtService.signAsync(
-      { name: user.name, email: user.email, id: user.id },
+      { firstName: user.firstName, lastName: user.lastName, email: user.email, id: user.id },
       { expiresIn: process.env.TEST_JWT_LIFE },
     );
     return {
@@ -61,7 +53,7 @@ export class UserService {
     }
 
     const accessToken = await this.jwtService.signAsync(
-      { name: user.name, email: user.email, id: user.id },
+      { firstName: user.firstName, lastName: user.lastName, email: user.email, id: user.id },
       { expiresIn: process.env.TEST_JWT_LIFE },
     );
     return {
@@ -75,7 +67,6 @@ export class UserService {
     if (!resultDeleteUser) {
       throw new BadRequestException(MessageError.DeleteUser);
     }
-    await this.redis.del(`user:${email}`);
     return resultDeleteUser;
   }
 
@@ -85,8 +76,6 @@ export class UserService {
     if (!user) {
       throw new BadRequestException(MessageError.DeleteUser);
     }
-
-    await this.redis.del(`user:${userParameters.email}`);
     return user;
   }
 }

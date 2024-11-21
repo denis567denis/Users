@@ -19,10 +19,10 @@ export class UserDomain {
     return this.userRepository.deleteUser(email);
   }
 
-  public async updateUser({ userId, email, name, password }: UpdateUserDomain) {
-    if (!email && !name && !password) {
+  public async updateUser({ userId, email, password, firstName, lastName, gender, address, city, phone }: UpdateUserDomain) {
+    if (!email && !password && !firstName && !lastName && !gender && !address && !city && !phone) {
       return null;
     }
-    return this.userRepository.updateUser({ userId, email, name, password });
+    return this.userRepository.updateUser({ userId, email, password, firstName, lastName, gender, address, city, phone });
   }
 }

@@ -4,13 +4,23 @@ export interface GetUserByEmailDomain {
 
 export interface CreateUserDomain {
   email: string;
-  name: string;
   password: string;
+  firstName: string;
+  lastName: string;
+  gender?: string;
+  address?: string;
+  city?: string;
+  phone?: string;
 }
 
 export interface UpdateUserDomain {
   userId: number;
-  email: string;
-  name?: string;
+  email?: string;
   password?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  address?: string;
+  city?: string;
+  phone?: string;
 }

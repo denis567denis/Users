@@ -6,10 +6,25 @@ export class UserEntity {
   id: number;
 
   @Column()
-  name: string;
+  firstName: string;
+
+  @Column()
+  lastName: string;
+
+  @Column({ nullable: true })
+  gender?: string;
+
+  @Column({ nullable: true })
+  address?: string;
+
+  @Column({ nullable: true })
+  city?: string;
+
+  @Column({ nullable: true })
+  phone?: string;
 
   @Column({ unique: true })
-  email?: string;
+  email: string;
 
   @Column()
   password: string;

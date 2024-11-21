@@ -38,21 +38,12 @@ $ npm install
 # Запуск докер-компаса
 $ docker-compose up -d
 
-# Сделать миграцию 
-$ npm run migration:run
-
 # Билд проекта
 $ npm run build
 
 # Запуск проекта
 $ npm run start
 
-
-## Run tests
-
-```bash
-#tests
-$ npm run test
 
  
 ```
@@ -71,7 +62,9 @@ $ npm run test
 
  ## User get by email
 
- curl --location --request GET 'http://localhost:3000/user/getUserByEmail' \
+curl --location --request GET 'http://localhost:3000/user/getUserByEmail' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJkZW5pcyIsImxhc3ROYW1lIjoiZGVuaXMiLCJlbWFpbCI6InN2ZW5AYmsucnUiLCJpZCI6MiwiaWF0IjoxNzMyMTk0MDMxLCJleHAiOjE3MzIxOTc2MzF9.p0XBZqo3us56PmD6VekW5VSMjGDSv1PBxrFDmPS_s0g' \
 --data-raw '{
     "email": "sven@bk.ru"
 }'
@@ -79,10 +72,10 @@ $ npm run test
 
  ## User authorization
 
- curl --location 'http://localhost:3000/user/singIn' \
+curl --location 'http://localhost:3000/user/singIn' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "email": "babai@bk.ru",
+    "email": "sven@bk.ru",
     "password": "denis"
 }'
 
@@ -90,10 +83,10 @@ $ npm run test
 
 curl --location --request PATCH 'http://localhost:3000/user/updateUser' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGVuaXMiLCJlbWFpbCI6InN2ZW5AYmsucnUiLCJpZCI6MSwiaWF0IjoxNzMwNTUyMjMzLCJleHAiOjE3MzA1NTU4MzN9.6zQQG4JKt-Yp8GtuBJadLi9smLl6mD4vPEfpgQASPyI' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJkZW5pcyIsImxhc3ROYW1lIjoiZGVuaXMiLCJlbWFpbCI6InN2ZW5AYmsucnUiLCJpZCI6MywiaWF0IjoxNzMyMTk0MTI1LCJleHAiOjE3MzIxOTc3MjV9.3yLEx_AErhXxM-RmqiGk6-SCZT5pNylUQukrFIlafTQ' \
 --data-raw '{
         "email": "sven@bk.ru",
-        "name": "Super denis",
+        "city": "DEnis",
         "userId": 3
 }'
 
@@ -101,50 +94,9 @@ curl --location --request PATCH 'http://localhost:3000/user/updateUser' \
 
 curl --location --request DELETE 'http://localhost:3000/user/deleteUser' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGVuaXMiLCJlbWFpbCI6InN2ZW5AYmsucnUiLCJpZCI6MSwiaWF0IjoxNzMwNTUyMjMzLCJleHAiOjE3MzA1NTU4MzN9.6zQQG4JKt-Yp8GtuBJadLi9smLl6mD4vPEfpgQASPyI' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJkZW5pcyIsImxhc3ROYW1lIjoiZGVuaXMiLCJlbWFpbCI6InN2ZW5AYmsucnUiLCJpZCI6MiwiaWF0IjoxNzMyMTk0MDkwLCJleHAiOjE3MzIxOTc2OTB9.3qCjCIcvrIIvLjLyOEaCE8G5GELkyl_03jxxGhTBlZ0' \
 --data-raw '{
     "email": "sven@bk.ru"
-}'
-
- ## Article create
-
-curl --location 'http://localhost:3000/article/createArticle' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGVuaXMiLCJlbWFpbCI6InN2ZW5AYmsucnUiLCJpZCI6MSwiaWF0IjoxNzMwNTQ4ODU4LCJleHAiOjE3MzA1NTI0NTh9.79y4ZVHBV2IFi-Yinaj4z8p3e3M2rDnnDE2BK2ruguw' \
---data-raw '{
-  "name": "super",
-  "decription": "super denis",
-  "email": "den@bk.ru"
-}'
-
- ## Article get with sort (if you want)
-
-curl --location --request GET 'http://localhost:3000/article/getArticles' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGVuaXMiLCJlbWFpbCI6InN2ZW5AYmsucnUiLCJpZCI6MSwiaWF0IjoxNzMwNTQ4ODU4LCJleHAiOjE3MzA1NTI0NTh9.79y4ZVHBV2IFi-Yinaj4z8p3e3M2rDnnDE2BK2ruguw' \
---data '{
-  "name": "denis",
-   "sort": true,
-   "sortParam":  "email"
-}'
-
- ## Article update
-
-curl --location --request PATCH 'http://localhost:3000/article/updateArticle' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU3VwZXIgZGVuaXMiLCJlbWFpbCI6InN2ZW5AYmsucnUiLCJpZCI6MywiaWF0IjoxNzMwNTUzODc3LCJleHAiOjE3MzA1NTc0Nzd9.i4yhDZtv3k6r2MD2uXAhINx1foTf2SDkJeDhQEX-5Rg' \
---data '{
-  "name": "test",
-  "articleId": 1
-}'
-
- ## Article delete
-
-curl --location --request DELETE 'http://localhost:3000/article/deleteArticle' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU3VwZXIgZGVuaXMiLCJlbWFpbCI6InN2ZW5AYmsucnUiLCJpZCI6MywiaWF0IjoxNzMwNTUzODc3LCJleHAiOjE3MzA1NTc0Nzd9.i4yhDZtv3k6r2MD2uXAhINx1foTf2SDkJeDhQEX-5Rg' \
---data '{
-    "articleId": 1
 }'
 
 
